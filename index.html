@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Tharshini ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at 50% 20%, #2e081e 0%, #15030e 55%, #050104 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+      color: #fff;
+      padding: 20px 0;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 460px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Envelope / Mystery Box */
+    .envelope-box {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 182, 193, 0.25);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 35px rgba(230, 57, 70, 0.25);
+      border-radius: 24px;
+      padding: 45px 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+      width: 100%;
+    }
+
+    .envelope-box:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 45px rgba(255, 75, 110, 0.45);
+    }
+
+    .pulsing-heart {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 24px;
+      position: relative;
+      background: #e63946;
+      transform: rotate(45deg);
+      animation: pulse 1.4s ease infinite;
+      box-shadow: 0 0 30px rgba(230, 57, 70, 0.85);
+    }
+
+    .pulsing-heart::before,
+    .pulsing-heart::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background: #e63946;
+      border-radius: 50%;
+    }
+
+    .pulsing-heart::before {
+      top: -35px;
+      left: 0;
+    }
+
+    .pulsing-heart::after {
+      left: -35px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1) rotate(45deg); }
+      30% { transform: scale(1.15) rotate(45deg); }
+      50% { transform: scale(1.05) rotate(45deg); }
+      70% { transform: scale(1.2) rotate(45deg); }
+      100% { transform: scale(1) rotate(45deg); }
+    }
+
+    .click-prompt {
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffd1dc;
+      font-weight: 500;
+    }
+
+    .sub-prompt {
+      font-size: 0.78rem;
+      color: rgba(255, 209, 220, 0.7);
+      margin-top: 8px;
+    }
+
+    /* Birthday Card Reveal */
+    .card {
+      display: none;
+      background: linear-gradient(145deg, rgba(38, 12, 27, 0.92) 0%, rgba(16, 4, 11, 0.96) 100%);
+      border: 1px solid rgba(255, 182, 193, 0.35);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 50px rgba(247, 37, 133, 0.35);
+      border-radius: 26px;
+      padding: 40px 30px;
+      text-align: center;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      transition: all 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+      position: relative;
+    }
+
+    .card.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Photo Frame */
+    .photo-wrapper {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(45deg, #ff4d6d, #ffb703, #e63946);
+      box-shadow: 0 0 25px rgba(255, 77, 109, 0.5);
+    }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      letter-spacing: 3px;
+      color: #fce4ec;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .card-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.6rem;
+      color: #ff758f;
+      margin-bottom: 18px;
+      line-height: 1.1;
+      text-shadow: 0 0 20px rgba(255, 117, 143, 0.6);
+    }
+
+    .tamil-quote {
+      font-size: 1.05rem;
+      color: #ffd6e0;
+      font-weight: 500;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+      font-style: italic;
+    }
+
+    .card-body {
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #f3d8e2;
+      font-weight: 300;
+      margin-bottom: 22px;
+    }
+
+    .card-footer {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.1rem;
+      color: #ffb3c1;
+    }
+
+    /* Audio Pill */
+    .music-player {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 192, 203, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #ffd1dc;
+      margin-bottom: 20px;
+    }
+
+    .music-bar {
+      display: inline-block;
+      width: 3px;
+      height: 12px;
+      background: #ff758f;
+      animation: bounce 1s infinite alternate;
+    }
+    .music-bar:nth-child(2) { animation-delay: 0.2s; height: 16px; }
+    .music-bar:nth-child(3) { animation-delay: 0.4s; height: 10px; }
+
+    @keyframes bounce {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1.3); }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Romantic Tamil Background Song (Default: "Vaseegara" Lofi / Piano instrumental stream) -->
+  <audio id="bgm" loop preload="auto">
+    <source src="song.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="container">
+    <!-- Click to Reveal Box -->
+    <div class="envelope-box" id="envelope" onclick="openSurprise()">
+      <div class="pulsing-heart"></div>
+      <p class="click-prompt">Touch to Open My Heart</p>
+      <p class="sub-prompt">🎵 Turn on sound for the best experience</p>
+    </div>
+
+    <!-- Hidden Birthday Card -->
+    <div class="card" id="card">
+      <!-- To use her photo: change src="wife.jpg" and keep the image in the same folder -->
+      <div class="photo-wrapper">
+        <img src="wife.jpg" alt="Tharshini" id="wife-photo">
+      </div>
+
+      <div class="music-player">
+        <span>Now Playing: Our Song</span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+        <span class="music-bar"></span>
+      </div>
+
+      <h2 class="card-title">Happy Birthday</h2>
+      <h1 class="card-name">Tharshini ❤️</h1>
+
+      <p class="tamil-quote">
+        "You are my world… You are my life… ❤️
+
+Whatever struggles, pain, and tears you have gone through in the past, let them become nothing more than memories. From now on, I wish to see nothing but a beautiful smile on your face. And if tears ever come to your eyes, let them only be tears of happiness.
+
+I may not be able to change your past, but I promise to do everything I can to fill your future with love, happiness, and endless beautiful memories.
+
+May every day of your life from now on be more beautiful than the last. May all your dreams come true.
+
+Happy Birthday, my beloved wife! ❤️🎂
+
+Having you in my life is my greatest blessing. Your presence by my side is my biggest happiness. No matter what life brings, I will always stand beside you, love you, and cherish you forever.
+
+I Love You Always, My Love! 🥹❤️"
+      </p>
+
+      <p class="card-body">
+        To my gorgeous wife, my anchor, and my forever love: thank you for filling every single day with laughter, warmth, and unmatched happiness.
+        <br><br>
+        May your day be as sweet, glowing, and unforgettable as you are to me.
+      </p>
+
+      <div class="card-footer">Forever & Always Yours &hearts;</div>
+    </div>
+  </div>
+
+  <script>
+    function openSurprise() {
+      const envelope = document.getElementById('envelope');
+      const card = document.getElementById('card');
+      const music = document.getElementById('bgm');
+
+      // Attempt to play music upon user interaction (browser policy compliant)
+      if (music) {
+        music.play().catch(e => console.log("Audio play error:", e));
+      }
+
+      envelope.style.opacity = '0';
+      envelope.style.transform = 'scale(0.85)';
+      
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        card.classList.add('show');
+        burstHearts(window.innerWidth / 2, window.innerHeight / 2, 45);
+      }, 400);
+    }
+
+    // Particle Canvas System
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const colors = ['#ff4d6d', '#ff758f', '#ff8fa3', '#c9184a', '#ffb3c1', '#ffccd5'];
+
+    class HeartParticle {
+      constructor(x, y, vx, vy, size, isBurst = false) {
+        this.x = x;
+        this.y = y;
+        this.vx = vx;
+        this.vy = vy;
+        this.size = size;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.alpha = 1;
+        this.decay = isBurst ? Math.random() * 0.015 + 0.008 : 0;
+        this.isBurst = isBurst;
+        this.oscillation = Math.random() * Math.PI * 2;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(this.alpha, 0);
+        ctx.translate(this.x, this.y);
+        ctx.fillStyle = this.color;
+        
+        ctx.beginPath();
+        const topCurveHeight = this.size * 0.3;
+        ctx.moveTo(0, topCurveHeight);
+        ctx.bezierCurveTo(0, 0, -this.size / 2, 0, -this.size / 2, topCurveHeight);
+        ctx.bezierCurveTo(-this.size / 2, (this.size + topCurveHeight) / 2, 0, this.size, 0, this.size * 1.2);
+        ctx.bezierCurveTo(0, this.size, this.size / 2, (this.size + topCurveHeight) / 2, this.size / 2, topCurveHeight);
+        ctx.bezierCurveTo(this.size / 2, 0, 0, 0, 0, topCurveHeight);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.isBurst) {
+          this.alpha -= this.decay;
+          this.vy += 0.04;
+        } else {
+          this.oscillation += 0.02;
+          this.x += Math.sin(this.oscillation) * 0.4;
+          if (this.y < -30) {
+            this.y = height + 30;
+            this.x = Math.random() * width;
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < 30; i++) {
+      particles.push(new HeartParticle(
+        Math.random() * width,
+        Math.random() * height,
+        (Math.random() - 0.5) * 0.3,
+        -Math.random() * 0.7 - 0.3,
+        Math.random() * 12 + 8,
+        false
+      ));
+    }
+
+    function burstHearts(originX, originY, count) {
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 7 + 2;
+        particles.push(new HeartParticle(
+          originX,
+          originY,
+          Math.cos(angle) * speed,
+          Math.sin(angle) * speed - 2,
+          Math.random() * 14 + 10,
+          true
+        ));
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+
+        if (p.isBurst && p.alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
